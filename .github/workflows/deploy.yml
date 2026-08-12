@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -18,11 +18,20 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Setup GitHub Pages
+      - name: Setup Pages
         uses: actions/configure-pages@v5
+
+      - name: Check files
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Repository:"
+          ls -la
+          echo "Docs:"
+          ls -la ./docs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
